@@ -37,6 +37,27 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CopyFiles@1
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: |
+      **\PokerLeagueManager*.zip
+      **\*.dacpac
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '\deploy\*'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\deploy\'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '\src\PokerLeagueManager.Utilties\bin\Debug\*'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\Utility\'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
